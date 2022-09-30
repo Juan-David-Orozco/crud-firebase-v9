@@ -1,16 +1,21 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { saveTask } from './firebase.js'
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyCJB3HLqc1fpqQ0zqYQBWwSj-kfxrgFy_Y",
-  authDomain: "crud-fb9.firebaseapp.com",
-  projectId: "crud-fb9",
-  storageBucket: "crud-fb9.appspot.com",
-  messagingSenderId: "580956242851",
-  appId: "1:580956242851:web:f49fe9e908783243fb5016"
-};
+window.addEventListener('DOMContentLoaded', () => {
+  console.log("works")
+})
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const taskForm = document.getElementById("task-form")
+
+taskForm.addEventListener('submit', (e) => {
+  e.preventDefault()
+  const title = taskForm['task-title']
+  const description = taskForm['task-description']
+  if(title.value !== "" && description.value !== ""){
+    saveTask(title.value, description.value)
+    title.value = ""
+    description.value = ""
+  }
+  else {
+    alert("Insert a title and a description")
+  }
+})
