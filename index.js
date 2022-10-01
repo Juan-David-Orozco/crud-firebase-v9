@@ -1,15 +1,13 @@
-import { saveTask, getTasks, onGetTasks, deleteTask, getTask } from './firebase.js'
+import { saveTask, getTasks, onGetTasks, deleteTask, getTask, updateTask } from './firebase.js'
 
 const tasksContainer = document.getElementById('tasks-container')
 const taskForm = document.getElementById("task-form")
 
 let editStatus = false
+let taskId = ''
 
 window.addEventListener('DOMContentLoaded', async () => {
-  console.log("works")
-  /* Se llama una vez */
-  //const querySnapshot = await getTasks()
- onGetTasks((querySnapshot) => {
+  onGetTasks((querySnapshot) => {
 
     let html = ``
     querySnapshot.forEach((doc) => {
@@ -41,6 +39,8 @@ window.addEventListener('DOMContentLoaded', async () => {
         taskForm['task-title'].value = task.title
         taskForm['task-description'].value = task.description
         editStatus = true
+        taskId = doc.id
+        taskForm['btn-task-save'].innerHTML = "Update"
       })
     })
 
@@ -54,12 +54,15 @@ taskForm.addEventListener('submit', (e) => {
   const description = taskForm['task-description']
 
   if(editStatus) {
-    console.log("editing")
+    updateTask(taskId, {title: title.value, description: description.value})
     editStatus = false
+    taskForm['btn-task-save'].innerHTML = "Save"
   } else {
-    //if(title.value !== "" && description.value !== ""){
+    if(title.value !== "" && description.value !== ""){
       saveTask(title.value, description.value)
+    } else {
+      alert("Fields required")
+    }
   }
-
-  taskForm.reset()  
+  taskForm.reset()
 })
