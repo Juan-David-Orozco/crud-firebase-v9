@@ -14,11 +14,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     querySnapshot.forEach((doc) => {
       const task = doc.data()
       tasksContainer.innerHTML += `
-        <div class="card card-body my-2 border border-primary" >
+        <div class="card card-body my-2 border border-info" >
           <h3 class="h5">${task.title}</h3>
           <p>${task.description}</p>
           <div class="d-flex">
-            <button class='btn btn-primary btn-delete m-1' data-id="${doc.id}">Delete</button>
+            <button class='btn btn-danger btn-delete m-1' data-id="${doc.id}">Delete</button>
             <button class='btn btn-secondary btn-edit m-1' data-id="${doc.id}">Edit</button>
           </div>
         </div>
