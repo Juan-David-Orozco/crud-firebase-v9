@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js"
+import { getFirestore, collection, addDoc, getDocs, onSnapshot, deleteDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -28,4 +28,8 @@ export const onGetTasks = (callback) =>
 
 export const deleteTask = (id) => {
   deleteDoc(doc(db, 'tasks', id))
+}
+
+export const getTask = async (id) => {
+  return await getDoc(doc(db, 'tasks', id))
 }
