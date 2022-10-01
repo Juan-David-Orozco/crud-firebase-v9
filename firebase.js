@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js"
+import { getFirestore, collection, addDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -17,7 +17,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 
-export const saveTask = async (title, description) => {
-  const newTask = await addDoc(collection(db, 'tasks'), {title, description})
-  console.log(newTask)
-}
+export const saveTask = async (title, description) =>
+  await addDoc(collection(db, 'tasks'), {title, description})
+
+export const getTasks = async () =>
+  await getDocs(collection(db, 'tasks'));
+
+export const onGetTasks = (callback) => 
+  onSnapshot(collection(db, 'tasks'), callback)
+
